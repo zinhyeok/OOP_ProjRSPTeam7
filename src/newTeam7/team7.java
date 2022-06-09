@@ -27,7 +27,7 @@ public class team7 implements RSPPlayable {
 	    @Override
 	    public void rememberOpponentMove(int oppmove, int yourmove) {
 	    	Mylogic.save_moveCount(moveCount);
-	        //rememberOpponentMove repeated by 3round 
+	        //rememberOpponentMove repeated by 4round 
 	    	if(moveCount==0){
 	    		Arr_oppmove[0] = oppmove;
 	    		}
@@ -51,13 +51,18 @@ public class team7 implements RSPPlayable {
 //	    	System.out.println((int)Arr_oppmove[2]);
 //	    	System.out.println((int)Arr_oppmove[3]);
 	    	//System.out.println(moveCount);
-	    	moveCount++;
 	    	if(moveCount>=3) {
 	      	Mylogic.detectOpp(Arr_oppmove);
 	    	}
 	    	//전략 case1 oppmove[0]==oppmove[2] 모두가 같다고 판정 -> 상대 전략을 파악
 	    	//-> gainmatrix에 의한 전략인 경우 해당케이스가 많다고 가정
-	 
+	    	if(moveCount%2 == 0) {
+	    		Mylogic.CountOppOdd(oppmove);
+	    	} 
+	    	if(moveCount%2 ==1) {
+	    		Mylogic.CountOppEven(oppmove);
+	    	} 
+	    	moveCount++;
 	    }
 	   
 

@@ -8,11 +8,25 @@ public class Mylogic {
 	static float[][] mymatrix;
 	static int moveCount;
 	
+	static private int rockCountOdd = 0;
+	static private int scissorsCountOdd = 0;
+	static private int paperCountOdd = 0;
+	static int sumCountOdd = 0;
+	static private int rockCountEven = 0;
+	static private int scissorsCountEven = 0;
+	static private int paperCountEven = 0;
+	static int sumCountEven = 0;
+	static int standardCount =5;
+	static double detectPercent = 1/3;
+	
 	public static void save_moveCount(int Count){
 		moveCount = Count;
 	}
 	public static int myRSP(int playermode){
 		myCurrentplayermode = playermode;
+//		if(moveCount%100 == 0 || moveCount%101 == 0){
+//			RandomRSP();
+//		}
 		if (playermode == 0){
 			return rowRSP;
 		}
@@ -61,6 +75,69 @@ public class Mylogic {
     		handleDetect((int)Arr_oppmove[0], myCurrentplayermode);
     	}
     	else{
+    		detectOppEven();
+    		detectOppOdd();
+    	}
+    }
+    
+    public static void CountOppOdd(int oppmove){
+    	//몇판 기준으로 확인할것인지
+    	if(oppmove==0){
+    		rockCountOdd ++;
+    	}
+    	else if(oppmove==1){
+    		scissorsCountOdd ++;
+    	}
+    	else if(oppmove==2){
+    		paperCountOdd++;
+    	}
+    	sumCountOdd++;
+    }
+    public static void detectOppOdd(){
+    	if(moveCount % standardCount == 0) {
+	    	if(rockCountOdd/sumCountOdd > detectPercent){
+	    		handleDetect(0, myCurrentplayermode);
+	    	}
+	    	if(scissorsCountOdd/sumCountOdd > detectPercent){
+	    		handleDetect(1, myCurrentplayermode);
+	    	}
+	    	if(paperCountOdd/sumCountOdd > detectPercent){
+	    		handleDetect(2, myCurrentplayermode);
+	    	}
+	    	rockCountOdd=0; scissorsCountOdd=0; paperCountOdd =0;
+    	}
+    	else{
+    		calculateGain(mymatrix);
+    	}
+    }
+    
+    public static void CountOppEven(int oppmove){
+    	if(oppmove==0){
+    		rockCountEven ++;
+    	}
+    	else if(oppmove==1){
+    		scissorsCountEven ++;
+    	}
+    	else if(oppmove==2){
+    		paperCountEven++;
+    	}
+    	sumCountEven++;
+    }
+    
+    public static void detectOppEven(){
+    	if(moveCount%standardCount==0) {
+	    	if(rockCountEven/sumCountEven > detectPercent){
+	    		handleDetect(0, myCurrentplayermode);
+	    	}
+	    	if(scissorsCountEven/sumCountEven > detectPercent){
+	    		handleDetect(1, myCurrentplayermode);
+	    	}
+	    	if(paperCountEven/sumCountEven > detectPercent){
+	    		handleDetect(2, myCurrentplayermode);
+	    	}
+	    	rockCountEven=0; scissorsCountEven=0; paperCountEven =0;
+    	}
+    	else{
     		calculateGain(mymatrix);
     	}
     }
@@ -100,5 +177,10 @@ public class Mylogic {
 	    		}
     		}
     	}
+    }
+    
+    public static int RandomRSP(){
+    	int myRandom = (int) (Math.random() * (3));
+    	return myRandom;
     }
 }
