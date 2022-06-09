@@ -10,7 +10,7 @@ import RSP.*;
 public class team7 implements RSPPlayable {
 	 private static int moveCount = 0;
 	 private String myGroupName = "team 7";
-	 int[] Arr_oppmove = new int[4];
+	 private static int[] Arr_oppmove = new int[4];
 	 
 	 
 	 @Override
